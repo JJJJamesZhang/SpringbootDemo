@@ -1,6 +1,8 @@
 package com.ss.demo.service;
 
 import com.ss.demo.entity.Employee;
+import com.ss.demo.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,29 +13,39 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
-    public static Map<Integer, Employee> map = new HashMap<>();
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public List<Employee> getEmployee(){
-        List<Employee> employees = new ArrayList<>();
-        map.forEach((k,v) -> {
-            employees.add(v);
-        });
+        List<Employee> employees = employeeRepository.findAll();
         return employees;
     }
 
-    public void putEmployee(Employee employee){
-        map.put(employee.getId(),employee);
+    public int putEmployee(Employee employee){
+//        if (employeeRepository.save(employee) != null){
+//            return 1;
+//        }else {
+//            return 0;
+//        }
+        try {
+            employeeRepository.save(employee);
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public void deleteEmployee(Integer id){
-        map.remove(id);
+
     }
 
     public void updateEmployee(Employee employee){
-        map.put(employee.getId(),employee);
+
     }
 
     public Employee getEmployeeById(Integer id){
-        return map.get(id);
+        return employeeRepository.findByEmpId(id);
     }
 }

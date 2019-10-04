@@ -4,6 +4,8 @@ import com.ss.demo.entity.Employee;
 import com.ss.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,9 +27,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/createEmployee")
-    public Employee createEmployee(@RequestBody Employee employee){
-        employeeService.putEmployee(employee);
-        return employee;
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee){
+        int result = employeeService.putEmployee(employee);
+        ResponseEntity<Employee> responseEntity;
+        if (result == 1){
+            responseEntity = new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
     }
 
     @PutMapping("/updateEmployee")
