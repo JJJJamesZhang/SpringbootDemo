@@ -12,3 +12,4 @@ CREATE TABLE `Department` (
   `department_name` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`department_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+

@@ -4,6 +4,7 @@ import com.ss.demo.entity.Employee;
 import com.ss.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +38,16 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
     public void deleteEmployee(Integer id){
-
+        employeeRepository.deleteEmployeeByEmpId(id);
     }
 
+    @Transactional
     public void updateEmployee(Employee employee){
-
+        employeeRepository.updateEmployee(employee.getEmpName(),employee.getEmpId());
     }
+
 
     public Employee getEmployeeById(Integer id){
         return employeeRepository.findByEmpId(id);

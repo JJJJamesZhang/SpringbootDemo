@@ -3,7 +3,9 @@ package com.ss.demo.repository;
 
 import com.ss.demo.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +18,10 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
     Employee findByEmpId(Integer empId);
 
-    @Query("update Employee set empName = :name")
-    void update();
+    //, departmentId= :id
+    @Query(value = "update Employee set empName = :name where empId = :id")
+    @Modifying
+    void updateEmployee(@Param("name") String name, @Param("id") Integer id);
 
-    void deleteByEmpId(Integer empId);
+    void deleteEmployeeByEmpId(Integer id);
 }

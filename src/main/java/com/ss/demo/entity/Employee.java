@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Data
@@ -13,12 +14,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Employee {
+public class Employee implements Serializable {
+//    private Long serializeId = 12312313123123L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer empId;
 
-    @Column
+    @Column()
     private String empName;
 
     @Column
